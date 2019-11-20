@@ -4,11 +4,13 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="card mt-5 col-6 offset-3">
+    <div class="card mx-auto mt-5 col-6 offset-3">
       <div class="row card-header">
-        <div class="mx-auto col-auto">РЕГИСТРАЦИЯ</div>
+        <div class="mx-auto col-auto">
+          <div class="row">ПРОФИЛЬ</div>
+          <div class="row mx-auto">{{ auth.user.login }}</div>
+        </div>
       </div>
-      
       {% if form.errors %}
         <div class="alert alert-danger" style="margin-top: 1em;">
           <ul style="margin: 0;">
@@ -27,28 +29,23 @@
         </div>
       {% endif %}
 
-      <form class="form-horizontal mb-5" action="{{ url_for('auth.registration') }}" method="post">
+      <form class="mx-auto col-10 mt-3 mb-3" action="{{ url_for('auth.profile') }}" method="post">
       {{ form.csrf_token }}
-        <div class="form-group">
-
-          {% for form in form %}
-            <div class="row">
-              <div class="mx-auto col-10 mt-3">
-                {{ form(class_='form-control', placeholder = form.label.text) }}
-              </div>
-            </div>
-          {% endfor %}
+        {% for field in form %}
+          <div class="form-group">
+            {{ field.label }}
+            {{ field(class_='form-control') }}
+          </div>
+        {% endfor %}
 
           <div class="row">
             <div class="mx-auto col-auto mt-4">
-              <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+              <button type="submit" class="btn btn-success">Сохранить</button>
             </div>
           </div>
         </div>
       </form>
-      </div>
+    </div>
   </div>
-  {% include 'components/or.jinja2' %}
-  {% include 'components/social_login.jinja2' %} 
 </div>
 {% endblock %}

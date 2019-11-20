@@ -1,44 +1,64 @@
 {% extends 'base.jinja2' %}
 {% block content %}
-
+  <link rel = "stylesheet"
+        type = "text/css"
+        href = "{{ url_for('static', filename='dist/style_answer.css') }}"/>
   <div class="container-fluid">
     <div class="row">
-      <div class="card mt-3 col-lg-6 offset-3" style="background-color: #D8BFD8">
-        <div class="card-header h5">Раздел {{ question.chapter.name }} Вопрос #{{ question.order_number }}</div>
-      <div class="card-body">{{ question.text | safe }}</div>
+      <div class="card col-sm question">
+        <div class="card-header h5 question-header">
+          Раздел {{ question.chapter.name }} Вопрос #{{ question.order_number }}
+        </div>
+        <div class="card-body text">
+          {{ question.text | safe }}
+        </div>
       </div>
     </div>
 
-
+    {% if form.errors %}
+      <div class="row">
+        <div class="card mt-2 col-6 offset-3">
+          {% for field, errors in form.errors.items() %}
+            <div class="alert alert-error">
+              {{ ', '.join(errors) }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
 
     {% if answers %}
       {% for answer in answers %}
         {% if answer.is_approve %}
-        <div class="row">
-          <div class="card mt-2 col-6 offset-3 bg-light border-info">
-            <div class="card-header" >
-              Ответ <img src="{{ url_for('static', filename='approve_symbol.jpg') }}" width="30">
-            </div>
-            <div class="card-body">
-              <blockquote class="blockquote mb-0">
-                 <div class="card-body">{{ answer.text | safe }}</div>
-              </blockquote>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="card col-sm bg-light answers">
+              <div class="card-header">
+                Ответ <img src="{{ url_for('static', filename='approve_symbol.jpg') }}" width="30">
+              </div>
+              <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                   <div class="card-body">{{ answer.text | safe }}</div>
+                </blockquote>
+              </div>
             </div>
           </div>
         </div>
         {% else %}
-          <div class="row">
-          <div class="card mt-2 col-6 offset-3 bg-light">
-            <div class="card-header">
-              Ответ
-            </div>
-            <div class="card-body">
-              <blockquote class="blockquote mb-0">
-                <div class="card-body">{{ answer.text | safe }}</div>
-              </blockquote>
+          <div class="container col-10">
+            <div class="row">
+              <div class="card mt-3 bg-light answers">
+                <div class="card-header">
+                  Ответ
+                </div>
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+                    <div class="card-body">{{ answer.text | safe }}</div>
+                  </blockquote>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
         {% endif %}
       {% endfor %}
       {% else %}

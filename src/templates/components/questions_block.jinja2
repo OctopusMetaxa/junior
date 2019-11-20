@@ -1,12 +1,15 @@
 {% for questions in chapter.splited_questions %}
-  <div class="row">
-    <div class="col-6 mt-4">
+  <link rel = "stylesheet"
+        type = "text/css"
+        href = "{{ url_for('static', filename='dist/style_question_block.css') }}"/>
+  <div class="row" style="justify-content: space-around;">
+    <div class="col-sm-3 col-md-6 mt-4">
       {% set question = questions[0] %}
       {% include 'components/question_card.jinja2' %}
     </div>
     {% if questions[1] %}
       {% set question = question[1] %}
-      <div class="col-6 mt-4">
+      <div class="col-sm-3 col-md-6 mt-4">
         {% set question = questions[1] %}
         {% include 'components/question_card.jinja2' %}
       </div>

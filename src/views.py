@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, redirect, render_template, session
+from flask import Blueprint, current_app, render_template, session
 from flask.views import MethodView
 from sqlalchemy.sql import func
 
@@ -25,8 +25,7 @@ class HomePage(BaseView):
         super().__init__(template_name)
 
     def get(self):
-        section = Section.query.order_by('order_number').first()
-        return redirect(f'/{section.id}', code=302)
+        return render_template(self.template_name, **self.context)
 
 
 class IndexPage(BaseView):
@@ -36,6 +35,9 @@ class IndexPage(BaseView):
 
     def get(self, section_id: int):
         section = Section.query.get(section_id)
+
+        if section is None:
+            return render_template(self.template_name, **self.context)
 
         self.context.update(
             dict(

@@ -1,5 +1,13 @@
 {% extends 'base.jinja2' %}
 
 {% block content %}
-  <h1>sample text</h1>
+  <div class="card col-lg-8 mb-3 bg-light" style="margin: 20px auto">
+    <img src="{{ url_for('static', filename='home_bg.png') }}" class="card-img-top" alt="...">
+    <div class="card-body">
+      {% if auth %}
+        <h3 class="card-title">Привет, {{ auth.user.login }}!</h3>
+      {% endif %}
+      <p class="card-text">Здесь ты можешь проверить свои знания перед сдачей теоретического минимума.</p>
+    </div>
+  </div>
 {% endblock %}

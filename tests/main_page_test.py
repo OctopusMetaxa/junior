@@ -6,6 +6,13 @@ from src.uttils import load_fixture
 from tests.base import BaseTest
 
 
+class TestHomeView(BaseTest):
+
+    def test(self):
+        response = self.client.get(url_for('index.home'))
+        self.assert200(response)
+
+
 class TestIndexView(BaseTest):
 
     def setUp(self):
@@ -13,9 +20,9 @@ class TestIndexView(BaseTest):
         load_question_structure(self)
 
     def test(self):
-        response = self.client.get(url_for('index.home'))
         section = Section.query.order_by('order_number').first()
-        self.assert_redirects(response, url_for('index.index', section_id=section.id))
+        response = self.client.get(url_for('index.index', section_id=section.id))
+        self.assert200(response)
 
 
 class TestQuestionsView(BaseTest):
